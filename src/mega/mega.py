@@ -749,7 +749,8 @@ class Mega:
                 file_info = os.stat(temp_output_file.name)
                 # Edit status message
                 percentage = file_info.st_size * 100 / file_size
-                
+                speed = current / diff if speed is None else speed
+              
                 progress = "`[{0}{1}]` \n".format(
                   ''.join(["●" for i in range(math.floor(percentage / 5))]),
                   ''.join(["○" for i in range(20 - math.floor(percentage / 5))])
@@ -760,7 +761,7 @@ class Mega:
                 )
 
                 try:
-                  dlstats_msg.edit(f"**Downloading...** {ok} \n{progress} \n➩ **Name** : `{file_name}` \n➩ **Done** : `{humanize.naturalsize(file_info.st_size)}` \n➩ **Total** : `{humanize.naturalsize(file_size)}`\n\n**@AsmSafone | @AsmSupport**", reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("Cancel Mega DL", callback_data="cancel_mega")]]))
+                  dlstats_msg.edit(f"**Downloading...** {ok} \n{progress} \n➩**Speed : {speed}\n ➩ **Name** : `{file_name}` \n➩ **Done** : `{humanize.naturalsize(file_info.st_size)}` \n➩ **Total** : `{humanize.naturalsize(file_size)}`\n\n**@AsmSafone | @AsmSupport**", reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("Cancel Mega DL", callback_data="cancel_mega")]]))
                   logger.info('%s of %s downloaded', file_info.st_size,
                             file_size)
                 except MessageNotModified:
