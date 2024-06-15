@@ -742,6 +742,8 @@ class Mega:
                     i = 0
 
                 block = chunk[i:i + 16]
+                now = time.time()
+                diff = now - start
                 if len(block) % 16:
                     block += b'\0' * (16 - (len(block) % 16))
                 mac_str = mac_encryptor.encrypt(encryptor.encrypt(block))
